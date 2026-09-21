@@ -1,0 +1,22 @@
+Validacao de buscas.py contra a caixa de aferição do enunciado (Secao 2)
+Matricula ficticia de referencia: 20231045
+
+Valor de referencia (enunciado):
+  Custo otimo da rota (UCS): 34
+  Custo da rota devolvida pela BFS: 55
+  No de passos da rota da BFS: 22
+  Nos expandidos pelo UCS: ~112
+  Nos expandidos pelo A* com Manhattan: ~93
+
+Valor obtido rodando `python src/buscas.py 20231045`:
+  BFS : custo= 55  passos= 22  expandidos= 114  fronteira_max=  13
+  DFS : custo=135  passos= 66  expandidos=  69  fronteira_max=  44
+  UCS : custo= 34  passos= 22  expandidos= 112  fronteira_max=  23
+  A*h1: custo= 34  passos= 22  expandidos= 112  fronteira_max=  23
+  A*h2: custo= 34  passos= 22  expandidos=  91  fronteira_max=  22
+  A*h3: custo= 34  passos= 22  expandidos=  25  fronteira_max=  20
+
+Conclusao: custo e passos batem exatamente (UCS=34, BFS=55/22).
+Nos expandidos do UCS batem exatamente (112). Nos expandidos do A* com
+Manhattan (91) ficam dentro da margem de +-20% do valor de referencia (93).
+Implementacao considerada validada.
