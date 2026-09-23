@@ -3,7 +3,7 @@
 **Disciplina:** Inteligência Artificial — Prof. Ronierison Maciel — UniRios — 2026.2
 
 **Dupla:**
-- [NOME COMPLETO 1] — matrícula [MATRÍCULA 1]
+- Miguel Gomes de Lima — matrícula [MATRÍCULA 1]
 - [NOME COMPLETO 2] — matrícula [MATRÍCULA 2]
 
 **Matrícula usada como semente:** `24114028` (integrante mais velho da dupla)
