@@ -4,7 +4,7 @@
 
 **Dupla:**
 - Miguel Gomes de Lima — matrícula 241.14.028
-- [NOME COMPLETO 2] — matrícula [MATRÍCULA 2]
+- Lucas Gomes Santos — matrícula 241.14.074
 
 **Matrícula usada como semente:** `24114028` (integrante mais velho da dupla)
 > ⚠️ Confirme se `24114028` é a matrícula correta antes de gerar a versão final —
