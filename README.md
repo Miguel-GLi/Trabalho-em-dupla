@@ -7,9 +7,6 @@
 - Lucas Gomes Santos — matrícula 241.14.074
 
 **Matrícula usada como semente:** `24114028` (integrante mais velho da dupla)
-> ⚠️ Confirme se `24114028` é a matrícula correta antes de gerar a versão final —
-> este número foi digitado no chat como `241.14.028` e os pontos foram
-> interpretados como separadores de milhar.
 
 ## O que este projeto faz
 
@@ -87,6 +84,3 @@ Parte 3.3 do relatório discute.
   desenvolvimento; o ponto de falha exato (n em que ocorre) pode variar
   alguns milhares de talhões conforme a máquina usada na correção,
   porque depende da memória RAM disponível.
-- Os nomes e matrículas da dupla no cabeçalho deste README e do
-  `RELATORIO.md` estão como placeholder e precisam ser preenchidos antes
-  da entrega.
