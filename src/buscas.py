@@ -1,30 +1,7 @@
-"""
-buscas.py - BFS, DFS, UCS e A* para o Caatinga.AI
-
-Ordem de expansao dos vizinhos (fixa em TODAS as estrategias): Norte, Sul, Oeste, Leste.
-Convencao de coordenadas: (linha, coluna) = (i, j); i cresce para baixo (Sul),
-j cresce para a direita (Leste). Portao em (0,0), coleta em (n-1,n-1).
-
-Teste de objetivo:
-- BFS: na geracao (padrao para BFS -- e o motivo de a rota ter o MENOR NUMERO DE
-  PASSOS possivel, mesmo nao sendo a de menor custo quando os custos nao sao uniformes).
-- DFS: na expansao (busca em grafo, marca visitado ao empilhar para evitar loop).
-- UCS e A*: na EXPANSAO (ao retirar da fronteira), nunca na geracao. Isso e' obrigatorio
-  quando o custo dos passos nao e' uniforme: testar na geracao pode devolver uma rota
-  sub-otima, porque o primeiro nó gerado para o objetivo nao e' necessariamente alcancado
-  pelo caminho mais barato.
-- UCS/A* nao reabrem nos: uma vez expandido (colocado no conjunto "fechado"), um estado
-  nao volta a fronteira. Isso e' seguro para UCS (heuristica nula e' trivialmente
-  consistente) e para A* com heuristica CONSISTENTE (h2 = Manhattan). Para h3 = 4*Manhattan,
-  que nao e' admissivel/consistente, o algoritmo ainda funciona (nao trava), mas a rota
-  devolvida pode nao ser otima -- e exatamente o que a Parte 3.3 pede para investigar.
-"""
-
 from collections import deque
 import heapq
 import itertools
 
-# N, S, O, L -- ordem fixa de expansao
 VIZINHOS = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
 
@@ -58,7 +35,6 @@ def reconstruir_caminho(veio_de, objetivo):
 
 
 def bfs(grid):
-    """Busca em largura. Teste de objetivo NA GERACAO (padrao de BFS)."""
     n = len(grid)
     inicio, objetivo = (0, 0), (n - 1, n - 1)
 
@@ -89,11 +65,10 @@ def bfs(grid):
                             "caminho": caminho}
                 fronteira.append(viz)
                 fronteira_max = max(fronteira_max, len(fronteira))
-    return None  # sem solucao (nao deve ocorrer: gerador garante caminho)
+    return None
 
 
 def dfs(grid):
-    """Busca em profundidade (em grafo). Teste de objetivo NA EXPANSAO."""
     n = len(grid)
     inicio, objetivo = (0, 0), (n - 1, n - 1)
 
@@ -113,10 +88,6 @@ def dfs(grid):
             return {"custo": custo_ate[atual], "passos": len(caminho) - 1,
                     "expandidos": expandidos, "fronteira_max": fronteira_max,
                     "caminho": caminho}
-        # empilha na ordem N,S,O,L: como e' pilha (LIFO), o ultimo empilhado
-        # (Leste) sera' o primeiro a ser desempilhado -- por isso percorremos
-        # VIZINHOS ja na ordem declarada e empilhamos nessa mesma ordem,
-        # aceitando que a exploracao efetiva sai na ordem inversa (L,O,S,N).
         for viz, c in vizinhos_validos(grid, *atual):
             if viz not in visitado:
                 visitado.add(viz)
@@ -127,11 +98,10 @@ def dfs(grid):
     return None
 
 
-_contador = itertools.count()  # desempate estavel (FIFO) em empates de prioridade
+_contador = itertools.count()
 
 
 def ucs(grid):
-    """Busca de custo uniforme. Teste de objetivo NA EXPANSAO. Nao reabre nos."""
     n = len(grid)
     inicio, objetivo = (0, 0), (n - 1, n - 1)
 
@@ -149,7 +119,7 @@ def ucs(grid):
             continue
         fechado.add(atual)
         expandidos += 1
-        if atual == objetivo:  # teste de objetivo na expansao
+        if atual == objetivo:
             caminho = reconstruir_caminho(veio_de, objetivo)
             return {"custo": custo_ate[atual], "passos": len(caminho) - 1,
                     "expandidos": expandidos, "fronteira_max": fronteira_max,
@@ -179,9 +149,6 @@ def h_manhattan_x4(pos, objetivo):
 
 
 def a_estrela(grid, heuristica):
-    """A*. Teste de objetivo NA EXPANSAO. Nao reabre nos (assume heuristica
-    consistente; para h3, que nao e' consistente, o algoritmo roda do mesmo
-    jeito mas pode devolver rota sub-otima -- ver Parte 3.3)."""
     n = len(grid)
     inicio, objetivo = (0, 0), (n - 1, n - 1)
 
@@ -201,7 +168,7 @@ def a_estrela(grid, heuristica):
             continue
         fechado.add(atual)
         expandidos += 1
-        if atual == objetivo:  # teste de objetivo na expansao
+        if atual == objetivo:
             caminho = reconstruir_caminho(veio_de, objetivo)
             return {"custo": custo_ate[atual], "passos": len(caminho) - 1,
                     "expandidos": expandidos, "fronteira_max": fronteira_max,

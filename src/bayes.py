@@ -1,15 +1,4 @@
-"""
-bayes.py - Parte 4.3: P(infestado | sensor positivo) e derivados,
-usando os parametros do sensor gerados pela matricula da dupla.
-"""
-
-
 def p_infestado_dado_positivo(prevalencia, sensibilidade, fpr):
-    """Teorema de Bayes:
-    P(inf|+) = P(+|inf) P(inf) / P(+)
-             = sensibilidade * prevalencia /
-               (sensibilidade * prevalencia + fpr * (1 - prevalencia))
-    """
     numerador = sensibilidade * prevalencia
     denominador = numerador + fpr * (1 - prevalencia)
     return numerador / denominador
@@ -22,18 +11,15 @@ def relatorio_bayes(params):
     talhoes_semana = params["talhoes_por_semana"]
 
     ppv = p_infestado_dado_positivo(prev, sens, fpr)
-    taxa_falsos_entre_alertas = 1 - ppv  # fracao dos alertas positivos que sao falsos
+    taxa_falsos_entre_alertas = 1 - ppv
 
-    # (b) a cada 100 alertas, quantos sao falsos
     falsos_por_100 = round(taxa_falsos_entre_alertas * 100, 1)
 
-    # (c) alertas totais esperados por semana e quantos sao falsos
     p_positivo = sens * prev + fpr * (1 - prev)
     alertas_por_semana = p_positivo * talhoes_semana
     falsos_por_semana = taxa_falsos_entre_alertas * alertas_por_semana
     horas_por_semana = falsos_por_semana * 12 / 60
 
-    # (d) aumentando sensibilidade para 99,9%, mantendo o MESMO fpr
     sens_nova = 0.999
     ppv_novo = p_infestado_dado_positivo(prev, sens_nova, fpr)
 

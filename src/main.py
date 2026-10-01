@@ -1,16 +1,3 @@
-"""
-main.py - Comando unico do projeto.
-
-Uso:
-    python src/main.py <matricula>
-
-Gera, a partir do zero, com a matricula como semente:
-    resultados/pomar.txt
-    resultados/resultados.csv
-    resultados/grafico.png
-E imprime no terminal os numeros de Bayes (Parte 4.3) para colar no relatorio.
-"""
-
 import csv
 import sys
 import time

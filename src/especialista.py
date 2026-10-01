@@ -1,27 +1,3 @@
-"""
-especialista.py - Mini sistema especialista para manejo de talhao, com
-encadeamento para tras (backward chaining) e explicacao da cadeia de regras.
-
-Regras (SE ... ENTAO ...)
---------------------------
-R1: SE armadilha_positiva E umidade_alta E dias_desde_pulverizacao > 14
-    ENTAO inspecionar_prioridade_alta
-R2: SE armadilha_positiva E NAO umidade_alta
-    ENTAO inspecionar_prioridade_media
-R3: SE folhas_amareladas E umidade_alta
-    ENTAO risco_fungico
-R4: SE risco_fungico E dias_desde_pulverizacao > 21
-    ENTAO inspecionar_prioridade_alta
-R5: SE inspecionar_prioridade_alta E talhao_proximo_reservatorio
-    ENTAO inspecionar_prioridade_alta_hoje
-R6: SE inspecionar_prioridade_media E fila_inspecao_livre
-    ENTAO agendar_inspecao_48h
-R7: SE NAO armadilha_positiva E NAO folhas_amareladas
-    ENTAO talhao_normal
-R8: SE armadilha_positiva E dias_desde_pulverizacao <= 14
-    ENTAO aguardar_efeito_pulverizacao
-"""
-
 REGRAS = [
     {"nome": "R1", "se": ["armadilha_positiva", "umidade_alta", "dias_desde_pulverizacao>14"],
      "entao": "inspecionar_prioridade_alta"},
@@ -60,8 +36,6 @@ def _fato_satisfeito(fato, base):
 
 
 def encadeamento_para_tras(objetivo, base, regras=REGRAS, trilha=None, visitados=None):
-    """Tenta provar 'objetivo' a partir da base de fatos, retornando
-    (True/False, trilha_de_regras_usadas)."""
     if trilha is None:
         trilha = []
     if visitados is None:

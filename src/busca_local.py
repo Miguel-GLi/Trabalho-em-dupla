@@ -1,32 +1,3 @@
-"""
-busca_local.py - Escolha de K talhoes para inspecao com bateria limitada.
-
-Modelagem do problema de busca local
--------------------------------------
-Estado: um conjunto de K talhoes livres (nao bloqueados) do pomar,
-        representado como uma tupla ordenada de K coordenadas (i, j).
-
-Vizinhanca: trocar (swap) UM talhao do estado atual por UM talhao livre que
-        nao esta no estado. De um estado com K talhoes saem ate
-        K * (livres - K) vizinhos.
-
-Funcao objetivo (o que o agente maximiza):
-        objetivo(estado) = soma_risco(estado) - ALPHA * custo_percurso(estado)
-
-        - soma_risco: cada talhao tem um risco de praga associado ao tipo de
-          terreno (solo encharcado retem umidade e favorece pragas, entao
-          pesa mais que carreador firme): risco('~') = 3, risco('.') = 1.
-        - custo_percurso: custo aproximado (Manhattan) de um passeio guloso
-          do portao (0,0) por todos os talhoes do estado, na ordem do vizinho
-          mais proximo a cada passo -- proxy do gasto de bateria/tempo para
-          visitar os K talhoes escolhidos nas 6 horas disponiveis.
-        - ALPHA pondera o quanto o deslocamento "pesa" contra o risco
-          inspecionado; ALPHA maior favorece talhoes proximos entre si.
-
-O objetivo é escolher os K talhões que maximizam risco coberto por unidade
-de deslocamento gasto -- ou seja, o melhor uso das 6 horas de bateria.
-"""
-
 import math
 import random
 
@@ -40,7 +11,7 @@ def risco(grid, i, j):
         return 3
     if v == ".":
         return 1
-    return 0  # bloqueado nunca deveria estar aqui
+    return 0
 
 
 def talhoes_livres(grid):
@@ -49,8 +20,6 @@ def talhoes_livres(grid):
 
 
 def custo_percurso_guloso(estado, origem=(0, 0)):
-    """Aproxima o custo de visitar todos os talhoes do estado: tour guloso
-    do vizinho mais proximo (distancia Manhattan), comecando no portao."""
     restantes = list(estado)
     atual = origem
     custo = 0
@@ -73,8 +42,6 @@ def estado_inicial(livres, k, rng):
 
 
 def vizinhos_swap(estado, livres, rng, amostra=None):
-    """Gera vizinhos por troca de 1 talhao. Se 'amostra' for dado, sorteia
-    apenas essa quantidade de vizinhos (usado na tempera simulada)."""
     fora = [p for p in livres if p not in estado]
     vizinhos = []
     candidatos = list(estado)
@@ -115,9 +82,7 @@ def tempera_simulada(grid, livres, k, rng, t0=10.0, resfriamento=0.995, iteracoe
         vizinho = candidatos[0]
         v = objetivo(grid, vizinho)
         delta = v - valor
-        # Aceita sempre que melhora; aceita PIORA com probabilidade
-        # exp(delta / t) -- e' essa aceitacao proposital de piora que
-        # permite escapar de otimos locais (Aula 04).
+
         if delta > 0 or rng.random() < math.exp(delta / t):
             estado, valor = vizinho, v
             melhor_valor = max(melhor_valor, valor)
