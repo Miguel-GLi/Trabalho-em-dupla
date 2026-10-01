@@ -6,8 +6,6 @@
 - Miguel Gomes de Lima — matrícula 241.14.028
 - Lucas Gomes Santos — matrícula 241.14.074
 
-**Matrícula usada como semente:** `24114028` (integrante mais velho da dupla)
-
 ## O que este projeto faz
 
 O Caatinga.AI é um agente que planeja rotas em um pomar de manga de 12×12
